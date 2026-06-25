@@ -7,6 +7,9 @@ if ( ! defined( 'ABSPATH' ) ) {
 }
 
 use Atlasbaz\Audits\Environment_Audit;
+use Atlasbaz\Scoring\Score_Calculator;
+use Atlasbaz\Recommendations;
+use Atlasbaz\Recommendations\Recommendation_Engine;
 
 class Admin_Menu {
 
@@ -33,15 +36,27 @@ class Admin_Menu {
 
 	public function render_dashboard(): void {
 
-            $audit = new Environment_Audit();
+        $audit      = new Environment_Audit();
+        $calculator = new Score_Calculator();
+        $engine     = new Recommendation_Engine();
 
-            $results = $audit->run();
+        $results         = $audit->run();
+        $score           = $calculator->calculate( $results );
+        $recommendations = $engine->generate( $results );
         ?>
         <div class="wrap">
             <h1>Atlasbaz Security Auditor</h1>
 
-            <h2>Environment Audit</h2>
+            <div class="notice notice-info">
+                <p>
+                    <strong>
+                        Security Score:
+                        <?php echo esc_html( $score ); ?>/100
+                    </strong>
+                </p>
+            </div>
 
+            <h2>Environment Audit</h2>
             <table class="widefat striped">
                 <tbody>
                     <tr>
@@ -62,6 +77,26 @@ class Admin_Menu {
                     </tr>
                 </tbody>
             </table>
+            <h2>Recommendations</h2>
+            <?php if ( empty( $recommendations ) ) : ?>
+
+                <p>No recommendations found.</p>
+
+            <?php else : ?>
+
+                <ul>
+
+                    <?php foreach ( $recommendations as $recommendation ) : ?>
+
+                        <li>
+                            <?php echo esc_html( $recommendation['message'] ); ?>
+                        </li>
+
+                    <?php endforeach; ?>
+
+                </ul>
+
+            <?php endif; ?>
         </div>
         <?php
 	}
