@@ -7,14 +7,14 @@ if (! defined( 'ABSPATH' )) {
 }
 
 use Atlasbaz\Audits\Environment_Audit;
+use Atlasbaz\Audits\User_Audit;
 use Atlasbaz\Audits\WordPress_Audit;
 use Atlasbaz\Scoring\Score_Calculator;
 use Atlasbaz\Recommendations\Recommendation_Engine;
 
 class Admin_Menu {
 
-	public function register(): void
-	{
+	public function register(): void {
 
 		add_action(
 			'admin_menu',
@@ -22,8 +22,7 @@ class Admin_Menu {
 		);
 	}
 
-	public function add_menu(): void
-	{
+	public function add_menu(): void {
 
 		add_menu_page(
 			'Atlasbaz Security Auditor',
@@ -40,15 +39,18 @@ class Admin_Menu {
 
 		$environment_audit 		= new Environment_Audit();
 		$wordpress_audit 	 	= new WordPress_Audit();
+		$user_audit				= new User_Audit();
 		$calculator 			= new Score_Calculator();
 		$engine     			= new Recommendation_Engine();
 
 		$environment_results = $environment_audit->run();
 		$wordpress_results   = $wordpress_audit->run();
+		$user_results 		 = $user_audit->run();
 
 		$results = array_merge(
 			$environment_results,
-			$wordpress_results
+			$wordpress_results,
+			$user_results
 		);
 
 		$findings = $engine->generate( $results );

@@ -60,6 +60,23 @@ class Recommendation_Engine {
 			];
 		}
 
+		if ( $results['default_admin_found'] ) {
+			$recommendations[] = [
+				'severity'       => 'high',
+				'message'        => 'Default administrator username detected.',
+				'recommendation' => 'Rename administrator accounts to non-predictable usernames.',
+			];
+		}
+
+		if ( $results['administrator_count'] > 3 ) {
+
+			$recommendations[] =  [
+				'severity' => 'high',
+				'message'  => 'Several administrator accounts exist.',
+				'recommendation' => 'Review administrator privileges and remove unnecessary accounts.',
+			];
+		}
+
 		return $recommendations;
 	}
 }
