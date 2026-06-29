@@ -8,24 +8,28 @@ if ( ! defined( 'ABSPATH' ) ) {
 
 class Score_Calculator {
 
-	public function calculate( array $results ): int {
+	public function calculate( array $findings ): int {
 
-		$score = 0;
+		$score = 100;
 
-		if ( version_compare( $results['php_version'], '8.2', '>=' ) ) {
-			$score += 40;
-		} elseif ( version_compare( $results['php_version'], '8.0', '>=' ) ) {
-			$score += 30;
-		} else {
-			$score += 10;
+		foreach ( $findings as $finding ) {
+
+			switch ( $finding['severity'] ) {
+
+				case 'high':
+					$score -= 20;
+					break;
+
+				case 'medium':
+					$score -= 10;
+					break;
+
+				case 'low':
+					$score -= 5;
+					break;
+			}
 		}
 
-		if ( $results['https_enabled'] ) {
-			$score += 30;
-		}
-
-		$score += 30;
-
-		return $score;
+		return max( 0, $score );
 	}
 }
