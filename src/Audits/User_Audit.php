@@ -18,25 +18,47 @@ class User_Audit implements Audit_Interface {
 
 		$default_admin_found = false;
 
-		foreach ( $administrators as $user ) {
+        $inactive_admins = 0;
 
-			if ( in_array(
-				strtolower( $user->user_login ),
-				[
-					'admin',
-					'administrator',
-					'wpadmin',
-				],
-				true
-			) ) {
+        $current_time       = time();
+        $inactive_threshold = DAY_IN_SECONDS * 90;
 
-				$default_admin_found = true;
-			}
-		}
+        foreach ( $administrators as $user ) {
 
-		return [
+            $last_login = get_user_meta(
+                $user->ID,
+                'atlasbaz_last_login',
+                true
+            );
+
+            if ( empty( $last_login ) ) {
+                $inactive_admins++;
+                continue;
+            }
+
+            if ( $current_time - $last_login > $inactive_threshold ) {
+                $inactive_admins++;
+            }
+
+            if (
+                in_array(
+                    strtolower( $user->user_login ),
+                    array(
+                        'admin',
+                        'administrator',
+                        'wpadmin',
+                    ),
+                    true
+                )
+            ) {
+                $default_admin_found = true;
+            }
+        }
+
+		return array(
 			'administrator_count' => count( $administrators ),
 			'default_admin_found' => $default_admin_found,
-		];
+			'inactive_admins'     => $inactive_admins,
+        );
 	}
 }

@@ -5,7 +5,7 @@
  * Version: 0.1.0
  * Author: Anass Rahou
  * License: GPL-2.0-or-later
- * Text Domain: atlasbaz-security-auditor
+ * Text Domain: atlasbaz
  */
 
 if ( ! defined( 'ABSPATH' ) ) {

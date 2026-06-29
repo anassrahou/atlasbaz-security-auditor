@@ -77,6 +77,15 @@ class Recommendation_Engine {
 			];
 		}
 
+		if ( $results['inactive_admins'] > 0 ) {
+
+			$recommendations[] = [
+				'severity'       => 'medium',
+				'message'        => 'Inactive administrator accounts detected.',
+				'recommendation' => 'Review or remove inactive administrator accounts.',
+			];
+		}
+
 		return $recommendations;
 	}
 }
