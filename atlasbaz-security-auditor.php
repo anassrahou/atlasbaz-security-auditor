@@ -2,7 +2,7 @@
 /**
  * Plugin Name: Atlasbaz Security Auditor
  * Description: Security auditing plugin focused on posture assessment and recommendations.
- * Version: 0.1.0
+ * Version: 0.2.0
  * Author: Anass Rahou
  * License: GPL-2.0-or-later
  * Text Domain: atlasbaz
