@@ -18,4 +18,4 @@ $plugin = new Atlasbaz\Core\Plugin();
 
 $plugin->run();
 
-define( 'ATLASBAZ_VERSION', '0.1.0' );
+define( 'ATLASBAZ_VERSION', '0.2.0' );
