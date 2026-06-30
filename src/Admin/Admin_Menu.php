@@ -41,11 +41,11 @@ class Admin_Menu {
 		$wordpress_audit 	 	= new WordPress_Audit();
 		$user_audit				= new User_Audit();
 		$calculator 			= new Score_Calculator();
-		$engine     			= new Recommendation_Engine();
+		$recommendation_engine	= new Recommendation_Engine();
 
-		$environment_results = $environment_audit->run();
-		$wordpress_results   = $wordpress_audit->run();
-		$user_results 		 = $user_audit->run();
+		$environment_results 	= $environment_audit->run();
+		$wordpress_results   	= $wordpress_audit->run();
+		$user_results 		 	= $user_audit->run();
 
 		$results = array_merge(
 			$environment_results,
@@ -53,7 +53,7 @@ class Admin_Menu {
 			$user_results
 		);
 
-		$findings = $engine->generate( $results );
+		$findings = $recommendation_engine->generate( $results );
 
 		$score = $calculator->calculate( $findings );
 

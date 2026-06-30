@@ -25,6 +25,20 @@ class User_Audit implements Audit_Interface {
 
         foreach ( $administrators as $user ) {
 
+            if (
+                in_array(
+                    strtolower( $user->user_login ),
+                    array(
+                        'admin',
+                        'administrator',
+                        'wpadmin',
+                    ),
+                    true
+                )
+            ) {
+                $default_admin_found = true;
+            }
+
             $last_login = get_user_meta(
                 $user->ID,
                 'atlasbaz_last_login',
@@ -40,19 +54,6 @@ class User_Audit implements Audit_Interface {
                 $inactive_admins++;
             }
 
-            if (
-                in_array(
-                    strtolower( $user->user_login ),
-                    array(
-                        'admin',
-                        'administrator',
-                        'wpadmin',
-                    ),
-                    true
-                )
-            ) {
-                $default_admin_found = true;
-            }
         }
 
 		return array(

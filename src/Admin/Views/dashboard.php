@@ -45,29 +45,79 @@ if (! defined('ABSPATH')) {
         </tbody>
     </table>
 
-    <h2>Recommendations</h2>
+    <h2>WordPress Audit</h2>
 
-    <?php if ( empty( $findings ) ) : ?>
+    <table class="widefat striped">
+        <tbody>
 
-        <p>No recommendations found.</p>
-
-    <?php else : ?>
-
-        <ul>
-
-            <?php foreach ( $findings as $recommendation ) : ?>
-
-                <li>
+            <tr>
+                <th>WP_DEBUG</th>
+                <td>
                     <?php echo esc_html(
-                        $recommendation['message']
+                        $results['wp_debug'] ? 'Enabled' : 'Disabled'
                     ); ?>
-                </li>
+                </td>
+            </tr>
 
-            <?php endforeach; ?>
+            <tr>
+                <th>WP_DEBUG_LOG</th>
+                <td>
+                    <?php echo esc_html(
+                        $results['wp_debug_log'] ? 'Enabled' : 'Disabled'
+                    ); ?>
+                </td>
+            </tr>
 
-        </ul>
+            <tr>
+                <th>File Editing</th>
+                <td>
+                    <?php echo esc_html(
+                        $results['file_editing_disabled']
+                            ? 'Disabled'
+                            : 'Enabled'
+                    ); ?>
+                </td>
+            </tr>
 
-    <?php endif; ?>
+        </tbody>
+    </table>
+
+    <h2>User Audit</h2>
+
+    <table class="widefat striped">
+        <tbody>
+
+            <tr>
+                <th>Administrator Accounts</th>
+                <td>
+                    <?php echo esc_html(
+                        $results['administrator_count']
+                    ); ?>
+                </td>
+            </tr>
+
+            <tr>
+                <th>Default Username Found</th>
+                <td>
+                    <?php echo esc_html(
+                        $results['default_admin_found']
+                            ? 'Yes'
+                            : 'No'
+                    ); ?>
+                </td>
+            </tr>
+
+            <tr>
+                <th>Inactive Administrators</th>
+                <td>
+                    <?php echo esc_html(
+                        $results['inactive_admins']
+                    ); ?>
+                </td>
+            </tr>
+
+        </tbody>
+    </table>
 
     <h2>Security Findings</h2>
     <?php if ( empty( $findings ) ) : ?>
