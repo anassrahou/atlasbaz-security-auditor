@@ -10,6 +10,7 @@ use Atlasbaz\Audits\Environment_Audit;
 use Atlasbaz\Audits\User_Audit;
 use Atlasbaz\Audits\WordPress_Audit;
 use Atlasbaz\Audits\Plugin_Audit;
+use Atlasbaz\Audits\Update_Status_Audit;
 
 class Audit_Manager {
 
@@ -22,6 +23,7 @@ class Audit_Manager {
             new WordPress_Audit(),
             new User_Audit(),
             new Plugin_Audit(),
+            new Update_Status_Audit(),
         ];
 
         foreach ( $audits as $audit ) {

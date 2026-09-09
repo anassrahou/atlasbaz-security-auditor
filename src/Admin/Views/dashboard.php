@@ -40,6 +40,7 @@ if ( $score >= 80 ) {
                 <th>Total Findings</th>
                 <th>High Priority</th>
                 <th>Inactive Plugins</th>
+                <th>Available Updates</th>
             </tr>
         </thead>
         <tbody>
@@ -47,6 +48,7 @@ if ( $score >= 80 ) {
                 <td><?php echo esc_html( count( $findings ) ); ?></td>
                 <td><?php echo esc_html( $high_findings ); ?></td>
                 <td><?php echo esc_html( $results['inactive_plugins'] ); ?></td>
+                <td><?php echo esc_html( $results['core_updates'] + $results['plugin_updates'] + $results['theme_updates'] ); ?></td>
             </tr>
         </tbody>
     </table>
@@ -166,6 +168,25 @@ if ( $score >= 80 ) {
                 </td>
             </tr>
 
+        </tbody>
+    </table>
+
+    <h2>Update Status</h2>
+
+    <table class="widefat striped">
+        <tbody>
+            <tr>
+                <th>WordPress Core Updates</th>
+                <td><?php echo esc_html( $results['core_updates'] ); ?></td>
+            </tr>
+            <tr>
+                <th>Plugin Updates</th>
+                <td><?php echo esc_html( $results['plugin_updates'] ); ?></td>
+            </tr>
+            <tr>
+                <th>Theme Updates</th>
+                <td><?php echo esc_html( $results['theme_updates'] ); ?></td>
+            </tr>
         </tbody>
     </table>
 

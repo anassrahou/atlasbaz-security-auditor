@@ -95,6 +95,30 @@ class Recommendation_Engine {
 			];
 		}
 
+		if ( ( $results['core_updates'] ?? 0 ) > 0 ) {
+			$recommendations[] = [
+				'severity'       => 'medium',
+				'message'        => 'WordPress core updates are available.',
+				'recommendation' => 'Update WordPress core to the latest supported version.',
+			];
+		}
+
+		if ( ( $results['plugin_updates'] ?? 0 ) > 0 ) {
+			$recommendations[] = [
+				'severity'       => 'medium',
+				'message'        => 'Plugin updates are available.',
+				'recommendation' => 'Review and install available plugin updates.',
+			];
+		}
+
+		if ( ( $results['theme_updates'] ?? 0 ) > 0 ) {
+			$recommendations[] = [
+				'severity'       => 'low',
+				'message'        => 'Theme updates are available.',
+				'recommendation' => 'Review and install available theme updates.',
+			];
+		}
+
 		return $recommendations;
 	}
 }
