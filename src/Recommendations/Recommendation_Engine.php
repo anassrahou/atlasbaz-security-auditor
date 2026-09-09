@@ -119,6 +119,22 @@ class Recommendation_Engine {
 			];
 		}
 
+		if ( $results['xmlrpc_enabled'] ?? false ) {
+			$recommendations[] = [
+				'severity'       => 'medium',
+				'message'        => 'XML-RPC is enabled.',
+				'recommendation' => 'Disable XML-RPC unless it is required by your site or integrations.',
+			];
+		}
+
+		if ( $results['rest_api_public'] ?? false ) {
+			$recommendations[] = [
+				'severity'       => 'low',
+				'message'        => 'The REST API is publicly accessible.',
+				'recommendation' => 'Review REST API exposure and restrict sensitive endpoints where appropriate.',
+			];
+		}
+
 		return $recommendations;
 	}
 }

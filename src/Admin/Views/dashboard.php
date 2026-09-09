@@ -41,6 +41,7 @@ if ( $score >= 80 ) {
                 <th>High Priority</th>
                 <th>Inactive Plugins</th>
                 <th>Available Updates</th>
+                <th>API Risks</th>
             </tr>
         </thead>
         <tbody>
@@ -49,6 +50,7 @@ if ( $score >= 80 ) {
                 <td><?php echo esc_html( $high_findings ); ?></td>
                 <td><?php echo esc_html( $results['inactive_plugins'] ); ?></td>
                 <td><?php echo esc_html( $results['core_updates'] + $results['plugin_updates'] + $results['theme_updates'] ); ?></td>
+                <td><?php echo esc_html( (int) ( $results['xmlrpc_enabled'] ?? false ) + (int) ( $results['rest_api_public'] ?? false ) ); ?></td>
             </tr>
         </tbody>
     </table>
@@ -186,6 +188,21 @@ if ( $score >= 80 ) {
             <tr>
                 <th>Theme Updates</th>
                 <td><?php echo esc_html( $results['theme_updates'] ); ?></td>
+            </tr>
+        </tbody>
+    </table>
+
+    <h2>API Exposure</h2>
+
+    <table class="widefat striped">
+        <tbody>
+            <tr>
+                <th>XML-RPC</th>
+                <td><?php echo esc_html( ( $results['xmlrpc_enabled'] ?? false ) ? 'Enabled' : 'Disabled' ); ?></td>
+            </tr>
+            <tr>
+                <th>REST API</th>
+                <td><?php echo esc_html( ( $results['rest_api_public'] ?? false ) ? 'Publicly accessible' : 'Restricted' ); ?></td>
             </tr>
         </tbody>
     </table>
