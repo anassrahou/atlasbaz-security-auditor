@@ -11,6 +11,7 @@
 
   auditHeadings.forEach(function (heading) {
     const table = heading.nextElementSibling;
+    const sectionTitle = heading.textContent.trim();
 
     if (!table || "TABLE" !== table.tagName) {
       return;
@@ -19,10 +20,11 @@
     const button = document.createElement("button");
     button.type = "button";
     button.className = "atlasbaz-section-toggle";
+    button.dataset.section = sectionTitle;
     button.setAttribute("aria-expanded", "true");
     button.innerHTML =
       "<span>" +
-      heading.textContent.trim() +
+      sectionTitle +
       '</span><span class="atlasbaz-section-icon" aria-hidden="true">-</span>';
 
     heading.textContent = "";
@@ -32,6 +34,14 @@
       const isExpanded = "true" === button.getAttribute("aria-expanded");
       button.setAttribute("aria-expanded", String(!isExpanded));
       table.hidden = isExpanded;
+      const relatedFilters = dashboard.querySelector(
+        '.atlasbaz-finding-filters[data-section="' + sectionTitle + '"]',
+      );
+
+      if (relatedFilters) {
+        relatedFilters.hidden = isExpanded;
+      }
+
       button.querySelector(".atlasbaz-section-icon").textContent = isExpanded
         ? "+"
         : "-";
@@ -46,6 +56,7 @@
 
   const filterBar = document.createElement("div");
   filterBar.className = "atlasbaz-finding-filters";
+  filterBar.dataset.section = "Security Findings";
   filterBar.setAttribute("aria-label", "Filter security findings");
 
   ["all", "high", "medium", "low"].forEach(function (severity) {
