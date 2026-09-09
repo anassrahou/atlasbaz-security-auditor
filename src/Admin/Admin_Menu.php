@@ -18,6 +18,36 @@ class Admin_Menu {
 			'admin_menu',
 			[$this, 'add_menu']
 		);
+		add_action(
+			'admin_enqueue_scripts',
+			[$this, 'enqueue_assets']
+		);
+	}
+
+	public function enqueue_assets( string $hook_suffix ): void {
+		if ( 'toplevel_page_atlasbaz-security-auditor' !== $hook_suffix ) {
+			return;
+		}
+
+		$plugin_file = dirname( __DIR__, 2 ) . '/atlasbaz-security-auditor.php';
+		$plugin_url  = plugin_dir_url( $plugin_file );
+		$plugin_path = plugin_dir_path( $plugin_file );
+		$style_path  = $plugin_path . 'assets/css/dashboard.css';
+		$script_path = $plugin_path . 'assets/js/dashboard.js';
+
+		wp_enqueue_style(
+			'atlasbaz-dashboard',
+			$plugin_url . 'assets/css/dashboard.css',
+			[],
+			(string) filemtime( $style_path )
+		);
+		wp_enqueue_script(
+			'atlasbaz-dashboard',
+			$plugin_url . 'assets/js/dashboard.js',
+			[],
+			(string) filemtime( $script_path ),
+			true
+		);
 	}
 
 	public function add_menu(): void {

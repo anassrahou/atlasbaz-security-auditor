@@ -1,0 +1,99 @@
+.atlasbaz-dashboard {
+  max-width: 1180px;
+}
+
+.atlasbaz-dashboard h1 {
+  margin-bottom: 18px;
+  font-weight: 600;
+  letter-spacing: -0.01em;
+}
+
+.atlasbaz-dashboard > .notice {
+  border-left-width: 4px;
+  box-shadow: 0 4px 12px rgba(30, 35, 40, 0.08);
+}
+
+.atlasbaz-dashboard > .widefat {
+  margin: 18px 0 28px;
+  border: 1px solid #dcdcde;
+  box-shadow: 0 2px 8px rgba(30, 35, 40, 0.04);
+}
+
+.atlasbaz-dashboard > .widefat:first-of-type th,
+.atlasbaz-dashboard > .widefat:first-of-type td {
+  text-align: center;
+}
+
+.atlasbaz-dashboard > .widefat:first-of-type th {
+  color: #50575e;
+  font-size: 11px;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+}
+
+.atlasbaz-dashboard h2 {
+  margin: 28px 0 0;
+  font-size: 18px;
+}
+
+.atlasbaz-section-toggle {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  width: 100%;
+  padding: 10px 12px;
+  border: 1px solid transparent;
+  border-radius: 3px;
+  background: transparent;
+  color: #1d2327;
+  font: inherit;
+  font-weight: 600;
+  text-align: left;
+  cursor: pointer;
+}
+
+.atlasbaz-section-toggle:hover,
+.atlasbaz-section-toggle:focus {
+  border-color: #c3c4c7;
+  background: #f6f7f7;
+}
+
+.atlasbaz-section-icon {
+  color: #646970;
+  font-size: 20px;
+  font-weight: 400;
+  line-height: 1;
+}
+
+.atlasbaz-dashboard h2 + .widefat {
+  margin-top: 6px;
+}
+
+.atlasbaz-finding-filters {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  margin: 12px 0 8px;
+}
+
+.atlasbaz-filter-button {
+  padding: 6px 12px;
+  border: 1px solid #c3c4c7;
+  border-radius: 999px;
+  background: #fff;
+  color: #50575e;
+  cursor: pointer;
+}
+
+.atlasbaz-filter-button:hover,
+.atlasbaz-filter-button:focus,
+.atlasbaz-filter-button.is-active {
+  border-color: #2271b1;
+  background: #f0f6fc;
+  color: #135e96;
+}
+
+.atlasbaz-findings-table tbody tr[hidden],
+.atlasbaz-dashboard [hidden] {
+  display: none;
+}
