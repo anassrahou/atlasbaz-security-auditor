@@ -16,6 +16,7 @@ After activation, the plugin checks several areas of your WordPress website:
 - Available WordPress, plugin, and theme updates
 - XML-RPC and REST API exposure
 - Important file and uploads-directory permissions
+- Database configuration, including the table prefix and character set
 
 The results are shown in the **Atlasbaz** page inside your WordPress administration area.
 
@@ -76,6 +77,7 @@ Atlasbaz reports issues but does not apply fixes automatically. Depending on the
 - Review XML-RPC or REST API exposure
 - Restrict access to sensitive files
 - Disable script execution in the uploads directory
+- Review the database table prefix and character set
 
 Always create a backup and confirm that a recommended change is compatible with your hosting environment, theme, plugins, and integrations before applying it.
 
@@ -86,6 +88,7 @@ Always create a backup and confirm that a recommended change is compatible with 
 - Update information depends on the information available to WordPress.
 - File-permission results can vary between operating systems and hosting providers.
 - API checks identify broad exposure and do not inspect every endpoint or integration.
+- Database checks provide configuration indicators and do not replace database-hardening or hosting-level reviews.
 - Some recommendations require hosting-level access or assistance from your hosting provider.
 
 ## Privacy and Changes

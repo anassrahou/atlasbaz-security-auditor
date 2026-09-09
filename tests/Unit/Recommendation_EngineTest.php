@@ -28,22 +28,26 @@ class Recommendation_EngineTest extends TestCase {
 			'wp_config_writable'     => true,
 			'htaccess_writable'      => true,
 			'uploads_executable'     => true,
+			'default_table_prefix'   => true,
+			'legacy_database_charset' => true,
 		];
 
 		$recommendations = $engine->generate( $results );
 
-		$this->assertCount( 18, $recommendations );
+		$this->assertCount( 20, $recommendations );
 		$this->assertSame( 'medium', $recommendations[0]['severity'] );
 		$this->assertSame( 'Upgrade PHP to version 8.2 or newer.', $recommendations[0]['recommendation'] );
 		$this->assertSame( 'Inactive plugins detected.', $recommendations[9]['message'] );
 		$this->assertSame( 'The wp-config.php file is writable.', $recommendations[10]['message'] );
 		$this->assertSame( 'The .htaccess file is writable.', $recommendations[11]['message'] );
 		$this->assertSame( 'The uploads directory is executable.', $recommendations[12]['message'] );
-		$this->assertSame( 'WordPress core updates are available.', $recommendations[13]['message'] );
-		$this->assertSame( 'Plugin updates are available.', $recommendations[14]['message'] );
-		$this->assertSame( 'Theme updates are available.', $recommendations[15]['message'] );
-		$this->assertSame( 'XML-RPC is enabled.', $recommendations[16]['message'] );
-		$this->assertSame( 'The REST API is publicly accessible.', $recommendations[17]['message'] );
+		$this->assertSame( 'The database uses the default WordPress table prefix.', $recommendations[13]['message'] );
+		$this->assertSame( 'The database is not using the utf8mb4 character set.', $recommendations[14]['message'] );
+		$this->assertSame( 'WordPress core updates are available.', $recommendations[15]['message'] );
+		$this->assertSame( 'Plugin updates are available.', $recommendations[16]['message'] );
+		$this->assertSame( 'Theme updates are available.', $recommendations[17]['message'] );
+		$this->assertSame( 'XML-RPC is enabled.', $recommendations[18]['message'] );
+		$this->assertSame( 'The REST API is publicly accessible.', $recommendations[19]['message'] );
 	}
 
 	public function test_returns_no_recommendations_for_secure_results(): void {
@@ -67,6 +71,8 @@ class Recommendation_EngineTest extends TestCase {
 			'wp_config_writable'     => false,
 			'htaccess_writable'      => false,
 			'uploads_executable'     => false,
+			'default_table_prefix'   => false,
+			'legacy_database_charset' => false,
 		];
 
 		$this->assertSame( [], $engine->generate( $results ) );
