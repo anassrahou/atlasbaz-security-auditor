@@ -10,25 +10,17 @@ class Score_Calculator {
 
 	public function calculate( array $findings ): int {
 
-		$high_count = 0;
-		$medium_count = 0;
-		$low_count = 0;
+		$score = 100;
+		$deductions = [
+			'high'   => 20,
+			'medium' => 10,
+			'low'    => 5,
+		];
+
 		foreach ( $findings as $finding ) {
 
-			switch ( $finding['severity'] ) {
-
-				case 'high':
-					$high_count++;
-					break;
-
-				case 'medium':
-					$medium_count++;
-					break;
-
-				case 'low':
-					$low_count++;
-					break;
-			}
+			$severity = $finding['severity'] ?? '';
+			$score   -= $deductions[ $severity ] ?? 0;
 		}
 
 		return max( 0, $score );

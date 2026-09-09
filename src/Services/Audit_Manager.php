@@ -9,8 +9,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 use Atlasbaz\Audits\Environment_Audit;
 use Atlasbaz\Audits\User_Audit;
 use Atlasbaz\Audits\WordPress_Audit;
-use Atlasbaz\Scoring\Score_Calculator;
-use Atlasbaz\Recommendations\Recommendation_Engine;
+use Atlasbaz\Audits\Plugin_Audit;
 
 class Audit_Manager {
 
@@ -22,6 +21,7 @@ class Audit_Manager {
             new Environment_Audit(),
             new WordPress_Audit(),
             new User_Audit(),
+            new Plugin_Audit(),
         ];
 
         foreach ( $audits as $audit ) {
