@@ -95,6 +95,30 @@ class Recommendation_Engine {
 			];
 		}
 
+		if ( $results['wp_config_writable'] ?? false ) {
+			$recommendations[] = [
+				'severity'       => 'high',
+				'message'        => 'The wp-config.php file is writable.',
+				'recommendation' => 'Restrict write access to wp-config.php after making required configuration changes.',
+			];
+		}
+
+		if ( $results['htaccess_writable'] ?? false ) {
+			$recommendations[] = [
+				'severity'       => 'medium',
+				'message'        => 'The .htaccess file is writable.',
+				'recommendation' => 'Restrict write access to .htaccess where your hosting configuration allows it.',
+			];
+		}
+
+		if ( $results['uploads_executable'] ?? false ) {
+			$recommendations[] = [
+				'severity'       => 'high',
+				'message'        => 'The uploads directory is executable.',
+				'recommendation' => 'Disable script execution in the uploads directory.',
+			];
+		}
+
 		if ( ( $results['core_updates'] ?? 0 ) > 0 ) {
 			$recommendations[] = [
 				'severity'       => 'medium',

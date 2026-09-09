@@ -42,6 +42,7 @@ if ( $score >= 80 ) {
                 <th>Inactive Plugins</th>
                 <th>Available Updates</th>
                 <th>API Risks</th>
+                <th>Permission Risks</th>
             </tr>
         </thead>
         <tbody>
@@ -51,6 +52,7 @@ if ( $score >= 80 ) {
                 <td><?php echo esc_html( $results['inactive_plugins'] ); ?></td>
                 <td><?php echo esc_html( $results['core_updates'] + $results['plugin_updates'] + $results['theme_updates'] ); ?></td>
                 <td><?php echo esc_html( (int) ( $results['xmlrpc_enabled'] ?? false ) + (int) ( $results['rest_api_public'] ?? false ) ); ?></td>
+                <td><?php echo esc_html( (int) ( $results['wp_config_writable'] ?? false ) + (int) ( $results['htaccess_writable'] ?? false ) + (int) ( $results['uploads_executable'] ?? false ) ); ?></td>
             </tr>
         </tbody>
     </table>
@@ -203,6 +205,25 @@ if ( $score >= 80 ) {
             <tr>
                 <th>REST API</th>
                 <td><?php echo esc_html( ( $results['rest_api_public'] ?? false ) ? 'Publicly accessible' : 'Restricted' ); ?></td>
+            </tr>
+        </tbody>
+    </table>
+
+    <h2>File Permissions</h2>
+
+    <table class="widefat striped">
+        <tbody>
+            <tr>
+                <th>wp-config.php Writable</th>
+                <td><?php echo esc_html( ( $results['wp_config_writable'] ?? false ) ? 'Yes' : 'No' ); ?></td>
+            </tr>
+            <tr>
+                <th>.htaccess Writable</th>
+                <td><?php echo esc_html( ( $results['htaccess_writable'] ?? false ) ? 'Yes' : 'No' ); ?></td>
+            </tr>
+            <tr>
+                <th>Uploads Directory Executable</th>
+                <td><?php echo esc_html( ( $results['uploads_executable'] ?? false ) ? 'Yes' : 'No' ); ?></td>
             </tr>
         </tbody>
     </table>
