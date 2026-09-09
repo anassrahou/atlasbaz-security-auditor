@@ -3,13 +3,29 @@
 if (! defined('ABSPATH')) {
     exit;
 }
+
+$high_findings = 0;
+
+foreach ( $findings as $finding ) {
+    if ( 'high' === ( $finding['severity'] ?? '' ) ) {
+        $high_findings++;
+    }
+}
+
+$score_class = 'notice-error';
+
+if ( $score >= 80 ) {
+    $score_class = 'notice-success';
+} elseif ( $score >= 50 ) {
+    $score_class = 'notice-warning';
+}
 ?>
 
 <div class="wrap">
 
     <h1>Atlasbaz Security Auditor</h1>
 
-    <div class="notice notice-info">
+    <div class="notice <?php echo esc_attr( $score_class ); ?>">
         <p>
             <strong>
                 Security Score:
@@ -17,6 +33,23 @@ if (! defined('ABSPATH')) {
             </strong>
         </p>
     </div>
+
+    <table class="widefat striped">
+        <thead>
+            <tr>
+                <th>Total Findings</th>
+                <th>High Priority</th>
+                <th>Inactive Plugins</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr>
+                <td><?php echo esc_html( count( $findings ) ); ?></td>
+                <td><?php echo esc_html( $high_findings ); ?></td>
+                <td><?php echo esc_html( $results['inactive_plugins'] ); ?></td>
+            </tr>
+        </tbody>
+    </table>
 
     <h2>Environment Audit</h2>
 
@@ -45,29 +78,96 @@ if (! defined('ABSPATH')) {
         </tbody>
     </table>
 
-    <h2>Recommendations</h2>
+    <h2>WordPress Audit</h2>
 
-    <?php if ( empty( $findings ) ) : ?>
+    <table class="widefat striped">
+        <tbody>
 
-        <p>No recommendations found.</p>
-
-    <?php else : ?>
-
-        <ul>
-
-            <?php foreach ( $findings as $recommendation ) : ?>
-
-                <li>
+            <tr>
+                <th>WP_DEBUG</th>
+                <td>
                     <?php echo esc_html(
-                        $recommendation['message']
+                        $results['wp_debug'] ? 'Enabled' : 'Disabled'
                     ); ?>
-                </li>
+                </td>
+            </tr>
 
-            <?php endforeach; ?>
+            <tr>
+                <th>WP_DEBUG_LOG</th>
+                <td>
+                    <?php echo esc_html(
+                        $results['wp_debug_log'] ? 'Enabled' : 'Disabled'
+                    ); ?>
+                </td>
+            </tr>
 
-        </ul>
+            <tr>
+                <th>File Editing</th>
+                <td>
+                    <?php echo esc_html(
+                        $results['file_editing_disabled']
+                            ? 'Disabled'
+                            : 'Enabled'
+                    ); ?>
+                </td>
+            </tr>
 
-    <?php endif; ?>
+        </tbody>
+    </table>
+
+    <h2>User Audit</h2>
+
+    <table class="widefat striped">
+        <tbody>
+
+            <tr>
+                <th>Administrator Accounts</th>
+                <td>
+                    <?php echo esc_html(
+                        $results['administrator_count']
+                    ); ?>
+                </td>
+            </tr>
+
+            <tr>
+                <th>Default Username Found</th>
+                <td>
+                    <?php echo esc_html(
+                        $results['default_admin_found']
+                            ? 'Yes'
+                            : 'No'
+                    ); ?>
+                </td>
+            </tr>
+
+            <tr>
+                <th>Inactive Administrators</th>
+                <td>
+                    <?php echo esc_html(
+                        $results['inactive_admins']
+                    ); ?>
+                </td>
+            </tr>
+
+        </tbody>
+    </table>
+
+    <h2>Plugin Audit</h2>
+
+    <table class="widefat striped">
+        <tbody>
+
+            <tr>
+                <th>Inactive Plugins</th>
+                <td>
+                    <?php echo esc_html(
+                        $results['inactive_plugins']
+                    ); ?>
+                </td>
+            </tr>
+
+        </tbody>
+    </table>
 
     <h2>Security Findings</h2>
     <?php if ( empty( $findings ) ) : ?>

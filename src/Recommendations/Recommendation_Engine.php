@@ -86,6 +86,15 @@ class Recommendation_Engine {
 			];
 		}
 
+		if ( $results['inactive_plugins'] > 0 ) {
+
+			$recommendations[] = [
+				'severity'       => 'medium',
+				'message'        => 'Inactive plugins detected.',
+				'recommendation' => 'Remove unused plugins to reduce the attack surface.',
+			];
+		}
+
 		return $recommendations;
 	}
 }
