@@ -13,6 +13,7 @@ use Atlasbaz\Audits\Plugin_Audit;
 use Atlasbaz\Audits\Update_Status_Audit;
 use Atlasbaz\Audits\Api_Exposure_Audit;
 use Atlasbaz\Audits\File_Permissions_Audit;
+use Atlasbaz\Audits\Database_Audit;
 
 class Audit_Manager {
 
@@ -28,6 +29,7 @@ class Audit_Manager {
             new Update_Status_Audit(),
             new Api_Exposure_Audit(),
             new File_Permissions_Audit(),
+            new Database_Audit(),
         ];
 
         foreach ( $audits as $audit ) {

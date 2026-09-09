@@ -43,6 +43,7 @@ if ( $score >= 80 ) {
                 <th>Available Updates</th>
                 <th>API Risks</th>
                 <th>Permission Risks</th>
+                <th>Database Risks</th>
             </tr>
         </thead>
         <tbody>
@@ -53,6 +54,7 @@ if ( $score >= 80 ) {
                 <td><?php echo esc_html( $results['core_updates'] + $results['plugin_updates'] + $results['theme_updates'] ); ?></td>
                 <td><?php echo esc_html( (int) ( $results['xmlrpc_enabled'] ?? false ) + (int) ( $results['rest_api_public'] ?? false ) ); ?></td>
                 <td><?php echo esc_html( (int) ( $results['wp_config_writable'] ?? false ) + (int) ( $results['htaccess_writable'] ?? false ) + (int) ( $results['uploads_executable'] ?? false ) ); ?></td>
+                <td><?php echo esc_html( (int) ( $results['default_table_prefix'] ?? false ) + (int) ( $results['legacy_database_charset'] ?? false ) ); ?></td>
             </tr>
         </tbody>
     </table>
@@ -224,6 +226,21 @@ if ( $score >= 80 ) {
             <tr>
                 <th>Uploads Directory Executable</th>
                 <td><?php echo esc_html( ( $results['uploads_executable'] ?? false ) ? 'Yes' : 'No' ); ?></td>
+            </tr>
+        </tbody>
+    </table>
+
+    <h2>Database Configuration</h2>
+
+    <table class="widefat striped">
+        <tbody>
+            <tr>
+                <th>Default Table Prefix</th>
+                <td><?php echo esc_html( ( $results['default_table_prefix'] ?? false ) ? 'Yes' : 'No' ); ?></td>
+            </tr>
+            <tr>
+                <th>Legacy Character Set</th>
+                <td><?php echo esc_html( ( $results['legacy_database_charset'] ?? false ) ? 'Yes' : 'No' ); ?></td>
             </tr>
         </tbody>
     </table>

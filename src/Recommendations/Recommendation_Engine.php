@@ -119,6 +119,22 @@ class Recommendation_Engine {
 			];
 		}
 
+		if ( $results['default_table_prefix'] ?? false ) {
+			$recommendations[] = [
+				'severity'       => 'medium',
+				'message'        => 'The database uses the default WordPress table prefix.',
+				'recommendation' => 'Consider using a custom table prefix to reduce predictable database naming.',
+			];
+		}
+
+		if ( $results['legacy_database_charset'] ?? false ) {
+			$recommendations[] = [
+				'severity'       => 'medium',
+				'message'        => 'The database is not using the utf8mb4 character set.',
+				'recommendation' => 'Review the database character set and migrate to utf8mb4 where supported.',
+			];
+		}
+
 		if ( ( $results['core_updates'] ?? 0 ) > 0 ) {
 			$recommendations[] = [
 				'severity'       => 'medium',
