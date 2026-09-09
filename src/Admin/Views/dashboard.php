@@ -21,7 +21,7 @@ if ( $score >= 80 ) {
 }
 ?>
 
-<div class="wrap">
+<div class="wrap atlasbaz-dashboard">
 
     <h1>Atlasbaz Security Auditor</h1>
 
@@ -252,7 +252,7 @@ if ( $score >= 80 ) {
 
     <?php else : ?>
 
-        <table class="widefat striped">
+        <table class="widefat striped atlasbaz-findings-table">
 
             <thead>
                 <tr>
@@ -266,7 +266,7 @@ if ( $score >= 80 ) {
 
                 <?php foreach ( $findings as $finding ) : ?>
 
-                    <tr>
+                    <tr data-severity="<?php echo esc_attr( $finding['severity'] ?? '' ); ?>">
 
                         <td>
                             <?php echo esc_html( ucfirst( $finding['severity'] ) ); ?>
