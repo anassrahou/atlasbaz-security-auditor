@@ -25,19 +25,25 @@ class Recommendation_EngineTest extends TestCase {
 			'theme_updates'          => 1,
 			'xmlrpc_enabled'         => true,
 			'rest_api_public'        => true,
+			'wp_config_writable'     => true,
+			'htaccess_writable'      => true,
+			'uploads_executable'     => true,
 		];
 
 		$recommendations = $engine->generate( $results );
 
-		$this->assertCount( 15, $recommendations );
+		$this->assertCount( 18, $recommendations );
 		$this->assertSame( 'medium', $recommendations[0]['severity'] );
 		$this->assertSame( 'Upgrade PHP to version 8.2 or newer.', $recommendations[0]['recommendation'] );
 		$this->assertSame( 'Inactive plugins detected.', $recommendations[9]['message'] );
-		$this->assertSame( 'WordPress core updates are available.', $recommendations[10]['message'] );
-		$this->assertSame( 'Plugin updates are available.', $recommendations[11]['message'] );
-		$this->assertSame( 'Theme updates are available.', $recommendations[12]['message'] );
-		$this->assertSame( 'XML-RPC is enabled.', $recommendations[13]['message'] );
-		$this->assertSame( 'The REST API is publicly accessible.', $recommendations[14]['message'] );
+		$this->assertSame( 'The wp-config.php file is writable.', $recommendations[10]['message'] );
+		$this->assertSame( 'The .htaccess file is writable.', $recommendations[11]['message'] );
+		$this->assertSame( 'The uploads directory is executable.', $recommendations[12]['message'] );
+		$this->assertSame( 'WordPress core updates are available.', $recommendations[13]['message'] );
+		$this->assertSame( 'Plugin updates are available.', $recommendations[14]['message'] );
+		$this->assertSame( 'Theme updates are available.', $recommendations[15]['message'] );
+		$this->assertSame( 'XML-RPC is enabled.', $recommendations[16]['message'] );
+		$this->assertSame( 'The REST API is publicly accessible.', $recommendations[17]['message'] );
 	}
 
 	public function test_returns_no_recommendations_for_secure_results(): void {
@@ -58,6 +64,9 @@ class Recommendation_EngineTest extends TestCase {
 			'theme_updates'          => 0,
 			'xmlrpc_enabled'         => false,
 			'rest_api_public'        => false,
+			'wp_config_writable'     => false,
+			'htaccess_writable'      => false,
+			'uploads_executable'     => false,
 		];
 
 		$this->assertSame( [], $engine->generate( $results ) );
