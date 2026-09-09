@@ -24,9 +24,9 @@ The results are shown in the **Atlasbaz** page inside your WordPress administrat
 
 The score starts at 100 and decreases when the audit finds a risk:
 
-- **High severity:** 20 points deducted
-- **Medium severity:** 10 points deducted
-- **Low severity:** 5 points deducted
+- **High severity:** 10 points deducted
+- **Medium severity:** 5 points deducted
+- **Low severity:** 2 points deducted
 
 The score is an overview, not a guarantee that a website is completely secure. A high score does not replace regular updates, backups, access-control reviews, or professional security testing.
 

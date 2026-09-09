@@ -18,7 +18,7 @@ class Score_CalculatorTest extends TestCase {
 			]
 		);
 
-		$this->assertSame( 65, $score );
+		$this->assertSame( 83, $score );
 	}
 
 	public function test_ignores_unknown_severities(): void {
@@ -29,7 +29,7 @@ class Score_CalculatorTest extends TestCase {
 
 	public function test_clamps_score_at_zero(): void {
 		$calculator = new Score_Calculator();
-		$findings = array_fill( 0, 6, [ 'severity' => 'high' ] );
+		$findings = array_fill( 0, 10, [ 'severity' => 'high' ] );
 
 		$this->assertSame( 0, $calculator->calculate( $findings ) );
 	}

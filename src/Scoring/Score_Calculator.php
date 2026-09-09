@@ -12,9 +12,9 @@ class Score_Calculator {
 
 		$score = 100;
 		$deductions = [
-			'high'   => 20,
-			'medium' => 10,
-			'low'    => 5,
+			'high'   => 10,
+			'medium' => 5,
+			'low'    => 2,
 		];
 
 		foreach ( $findings as $finding ) {
