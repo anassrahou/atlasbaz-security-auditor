@@ -1,92 +1,106 @@
 # Atlasbaz Security Auditor
 
-Atlasbaz Security Auditor is a WordPress plugin that reviews a site's security posture and presents a score with actionable recommendations.
+Atlasbaz Security Auditor helps WordPress administrators understand the security condition of their website.
 
-The plugin is read-only: it reports risks but does not automatically change WordPress configuration, update software, or modify file permissions.
+It reviews important settings, identifies potential risks, and presents a security score with practical recommendations. The plugin is designed to help you see what deserves attention without changing your website automatically.
 
-## What It Checks
+## What the Plugin Does
 
-The current audit includes:
+After activation, the plugin checks several areas of your WordPress website:
 
-- PHP, WordPress version, and HTTPS status
-- `WP_DEBUG`, `WP_DEBUG_LOG`, file editing, and automatic updates
-- Administrator count, default administrator usernames, and inactive administrators
+- PHP, WordPress version, and HTTPS protection
+- Debugging and file-editing settings
+- Automatic update settings
+- Administrator accounts and inactive administrators
 - Inactive plugins
-- Available WordPress core, plugin, and theme updates
-- XML-RPC status and REST API exposure
-- Writable `wp-config.php` and `.htaccess` files
-- An executable uploads directory
+- Available WordPress, plugin, and theme updates
+- XML-RPC and REST API exposure
+- Important file and uploads-directory permissions
 
-Findings are classified as high, medium, or low severity. The score starts at 100 and applies these deductions:
+The results are shown in the **Atlasbaz** page inside your WordPress administration area.
 
-- High: 20 points
-- Medium: 10 points
-- Low: 5 points
+## Security Score
 
-The score cannot fall below zero.
+The score starts at 100 and decreases when the audit finds a risk:
+
+- **High severity:** 20 points deducted
+- **Medium severity:** 10 points deducted
+- **Low severity:** 5 points deducted
+
+The score is an overview, not a guarantee that a website is completely secure. A high score does not replace regular updates, backups, access-control reviews, or professional security testing.
 
 ## Installation
 
-1. Copy the `atlasbaz-security-auditor` directory into `wp-content/plugins/`.
-2. Ensure the `vendor/` directory is present, or run `composer install` in the plugin directory.
-3. In WordPress admin, open **Plugins** and activate **Atlasbaz Security Auditor**.
-4. Open the **Atlasbaz** menu to view the audit dashboard.
+### Install from a ZIP file
 
-For local development, the recommended setup is a WordPress installation running under XAMPP. The plugin directory should be the active working copy inside that installation.
+1. Download the plugin ZIP file.
+2. In WordPress, open **Plugins → Add New Plugin**.
+3. Select **Upload Plugin**.
+4. Choose the ZIP file and select **Install Now**.
+5. Select **Activate Plugin** after installation.
+6. Open **Atlasbaz** in the WordPress administration menu.
 
-## Development
+### Install manually
 
-Requirements:
+1. Extract the plugin folder.
+2. Copy it into your site's `wp-content/plugins/` directory.
+3. Open **Plugins** in WordPress administration.
+4. Activate **Atlasbaz Security Auditor**.
+5. Open **Atlasbaz** to view the dashboard.
 
-- PHP 8.2 or newer
-- Composer
-- WordPress
+## Using the Dashboard
 
-Install development dependencies:
+Open **Atlasbaz** whenever you want to review the current security status of the site.
 
-```powershell
-composer install
-```
+The dashboard includes:
 
-Run the automated tests:
+- The overall security score
+- A summary of total and high-priority findings
+- Environment and WordPress configuration details
+- Administrator and plugin information
+- Available software updates
+- API exposure information
+- File-permission information
+- A recommendation for each detected finding
 
-```powershell
-composer test
-```
+Review high-severity findings first, then medium and low-severity findings. After resolving an issue, return to the dashboard to review the updated result.
 
-The test suite uses PHPUnit and covers score calculation, recommendation rules, and file-permission audit behavior.
+## Recommendations
 
-Before committing a change:
+Atlasbaz reports issues but does not apply fixes automatically. Depending on the recommendation, you may need to:
 
-```powershell
-git status
-composer test
-git add .
-git commit -m "Describe the change"
-git push
-```
+- Update WordPress, plugins, or themes
+- Disable debugging on a production website
+- Review administrator accounts
+- Remove unused plugins
+- Review XML-RPC or REST API exposure
+- Restrict access to sensitive files
+- Disable script execution in the uploads directory
 
-Feature work should be developed on a branch and merged into `main` through a pull request.
+Always create a backup and confirm that a recommended change is compatible with your hosting environment, theme, plugins, and integrations before applying it.
 
-## Architecture
+## Important Limitations
 
-- `src/Audits/` contains individual audit modules.
-- `src/Services/Audit_Manager.php` runs the audit modules and combines their results.
-- `src/Recommendations/Recommendation_Engine.php` turns results into findings.
-- `src/Scoring/Score_Calculator.php` calculates the security score.
-- `src/Admin/Views/dashboard.php` renders the WordPress admin dashboard.
-- `tests/Unit/` contains PHPUnit tests for isolated behavior.
+- The plugin is an auditing tool, not a complete vulnerability scanner or penetration test.
+- Results reflect the website's condition at the time of the scan.
+- Update information depends on the information available to WordPress.
+- File-permission results can vary between operating systems and hosting providers.
+- API checks identify broad exposure and do not inspect every endpoint or integration.
+- Some recommendations require hosting-level access or assistance from your hosting provider.
 
-New audits should implement `Audit_Interface`, return a small array of result values, and be registered in `Audit_Manager`.
+## Privacy and Changes
 
-## Limitations
+The plugin is intended to inspect the local WordPress installation and display its results to administrators. It does not automatically modify the site's configuration, update software, or change file permissions.
 
-- The plugin does not replace a full vulnerability scanner or penetration test.
-- File-permission results depend on the operating system and hosting configuration.
-- Update checks depend on WordPress's available update information at scan time.
-- API exposure checks identify broad exposure; they do not audit every REST endpoint or integration.
-- The current tests do not boot a complete WordPress installation, so the dashboard should also be checked manually in XAMPP.
+## Support
+
+Before requesting help, note:
+
+- Your WordPress and PHP versions
+- The finding or dashboard section involved
+- Whether the issue occurs on a local or hosted website
+- Any recent plugin, theme, or hosting changes
 
 ## License
 
-Atlasbaz Security Auditor is licensed under the GPL-2.0-or-later license. See [LICENSE](LICENSE).
+Atlasbaz Security Auditor is licensed under GPL-2.0-or-later. See [LICENSE](LICENSE) for the full license text.
