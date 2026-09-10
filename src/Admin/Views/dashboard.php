@@ -13,6 +13,7 @@ foreach ( $findings as $finding ) {
 }
 
 $score_class = 'notice-error';
+$last_scan   = get_option( 'atlasbaz_last_scan', 0 );
 
 if ( $score >= 80 ) {
     $score_class = 'notice-success';
@@ -23,7 +24,22 @@ if ( $score >= 80 ) {
 
 <div class="wrap atlasbaz-dashboard">
 
-    <h1>Atlasbaz Security Auditor</h1>
+    <div class="atlasbaz-dashboard-header">
+        <div>
+            <h1>Atlasbaz Security Auditor</h1>
+            <p class="atlasbaz-last-scan">
+                <?php if ( $last_scan ) : ?>
+                    Last scan: <?php echo esc_html( wp_date( get_option( 'date_format' ) . ' ' . get_option( 'time_format' ), $last_scan ) ); ?>
+                <?php else : ?>
+                    No scan has been saved yet.
+                <?php endif; ?>
+            </p>
+        </div>
+        <form method="post" action="<?php echo esc_url( admin_url( 'admin-post.php' ) ); ?>">
+            <input type="hidden" name="action" value="atlasbaz_run_scan">
+            <button type="submit" name="atlasbaz_scan" class="button button-primary">Scan Now</button>
+        </form>
+    </div>
 
     <div class="notice <?php echo esc_attr( $score_class ); ?>">
         <p>
