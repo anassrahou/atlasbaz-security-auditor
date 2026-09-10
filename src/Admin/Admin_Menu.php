@@ -22,6 +22,10 @@ class Admin_Menu {
 			'admin_enqueue_scripts',
 			[$this, 'enqueue_assets']
 		);
+		add_action(
+			'admin_post_atlasbaz_run_scan',
+			[$this, 'handle_scan']
+		);
 	}
 
 	public function enqueue_assets( string $hook_suffix ): void {
@@ -63,8 +67,20 @@ class Admin_Menu {
 		);
 	}
 
-	public function render_dashboard(): void {
+	public function handle_scan(): void {
+		if ( ! current_user_can( 'manage_options' ) ) {
+			wp_die( 'You do not have permission to run a security scan.' );
+		}
 
+		update_option( 'atlasbaz_last_scan', current_time( 'timestamp' ) );
+
+		wp_safe_redirect(
+			admin_url( 'admin.php?page=atlasbaz-security-auditor&scan=complete' )
+		);
+		exit;
+	}
+
+	public function render_dashboard(): void {
 		$audit_manager 			= new Audit_Manager();
 		$recommendation_engine 	= new Recommendation_Engine();
 		$score_calculator 		= new Score_Calculator();
